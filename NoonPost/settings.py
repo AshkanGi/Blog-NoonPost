@@ -1,3 +1,5 @@
+import os
+from os import path
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -15,6 +17,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    #My_App
+    "AccountApp.apps.AccountappConfig",
+    #Installed App
+    'django_cleanup',
 ]
 
 MIDDLEWARE = [
@@ -79,5 +85,16 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+MEDIA_URL = '/media/'
+MEDIA_ROOT = path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+AUTH_USER_MODEL = "AccountApp.User"
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'Ashkanghodrati0@gmail.com'
+EMAIL_HOST_PASSWORD = 'lnkj vhjp bzsj ntay' #کد ۱۶ رقمی مخصوص جیمیل
+
