@@ -26,7 +26,7 @@ class User(AbstractBaseUser):
     phone = models.CharField(max_length=11, unique=True, null=True, blank=True)
     email = models.EmailField(max_length=255, unique=True, blank=True, null=True)
     bio = models.TextField(max_length=225)
-    image = models.ImageField(upload_to='profile/user')
+    image = models.ImageField(upload_to='profile/user', blank=True)
 
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
