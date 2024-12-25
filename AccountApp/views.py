@@ -58,7 +58,7 @@ class VerifyCodeView(BaseView):
             login(request, user)
             otp_instance.delete()
             request.session.pop('username_info', None)
-            return redirect('HomeApp:Home')
+            return redirect('BlogApp:home')
         form.add_error('code', 'کد معتبر نمیباشد.')
         return render(request, self.template_name, {'form': form})
 
@@ -76,7 +76,7 @@ class LoginView(BaseView):
         if user:
             login(request, user)
             request.session.pop('username_info', None)
-            return redirect('HomeApp:Home')
+            return redirect('BlogApp:home')
         form.add_error('password', 'رمز عبور معتبر نمیباشد.')
         return render(request, self.template_name, {'form': form})
 
@@ -84,7 +84,7 @@ class LoginView(BaseView):
 class LogoutView(View):
     def get(self, request):
         logout(request)
-        return redirect('HomeApp:Home')
+        return redirect('BlogApp:home')
 
 
 class ForgetView(BaseView):
@@ -178,7 +178,7 @@ class EnterOTPVerifyView(BaseView):
             login(request, user)
             otp_instance.delete()
             request.session.pop('username_info', None)
-            return redirect('HomeApp:Home')
+            return redirect('BlogApp:home')
         form.add_error('code', 'کد معتبر نمیباشد.')
         return render(request, self.template_name, {'form': form})
 

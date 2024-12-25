@@ -19,8 +19,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     #My_App
     "AccountApp.apps.AccountappConfig",
+    "BlogApp.apps.BlogappConfig",
     #Installed App
     'django_cleanup',
+    'ckeditor',
+    'jalali_date',
 ]
 
 MIDDLEWARE = [
@@ -47,6 +50,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'context_processors.context_processors.articles_categories',
             ],
         },
     },
@@ -98,3 +102,42 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'Ashkanghodrati0@gmail.com'
 EMAIL_HOST_PASSWORD = 'lnkj vhjp bzsj ntay' #کد ۱۶ رقمی مخصوص جیمیل
 
+
+# CKEditor Settings
+CKEDITOR_UPLOAD_PATH = 'uploads/'
+CKEDITOR_IMAGE_BACKEND = "pillow"
+CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
+CKEDITOR_CONFIGS = {
+    'default':
+        {
+            'toolbar': 'advanced'
+        }
+}
+
+
+# Jalali Date Settings
+JALALI_DATE_DEFAULTS = {
+   # if change it to true then all dates of the list_display will convert to the Jalali.
+   'LIST_DISPLAY_AUTO_CONVERT': False,
+   'Strftime': {
+        'date': '%y/%m/%d',
+        'datetime': '%H:%M:%S _ %y/%m/%d',
+    },
+    'Static': {
+        'js': [
+            # loading datepicker
+            'admin/js/django_jalali.min.js',
+            # OR
+            # 'admin/jquery.ui.datepicker.jalali/scripts/jquery.ui.core.js',
+            # 'admin/jquery.ui.datepicker.jalali/scripts/calendar.js',
+            # 'admin/jquery.ui.datepicker.jalali/scripts/jquery.ui.datepicker-cc.js',
+            # 'admin/jquery.ui.datepicker.jalali/scripts/jquery.ui.datepicker-cc-fa.js',
+            # 'admin/js/main.js',
+        ],
+        'css': {
+            'all': [
+                'admin/jquery.ui.datepicker.jalali/themes/base/jquery-ui.min.css',
+            ]
+        }
+    },
+}
