@@ -94,6 +94,11 @@ def contact(request):
     return render(request, 'BlogApp/contact.html', {'tag': tag, 'form': form})
 
 
+def about(request):
+    tag = Tag.objects.all()
+    return render(request, 'BlogApp/about.html', {'tag': tag})
+
+
 def subscribe(request):
     if request.method == 'POST':
         form = SubscriberForm(request.POST)

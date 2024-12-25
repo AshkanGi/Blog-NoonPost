@@ -6,6 +6,9 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>اطلاعات حساب کاربری</title>
 
+    <!-- favicon -->
+    <link rel="icon" sizes="16x16" href="{% static 'assets/img/favicon.png' %}">
+
     <link href="{% static 'assets/css/fonts.css' %}" rel="stylesheet" />
     <link href="{% static 'assets/css/dependencies/swiper.min.css' %}" rel="stylesheet" />
     <link href="{% static 'assets/css/theme.css' %}" rel="stylesheet" />
@@ -938,8 +941,8 @@
         </symbol>
       </svg>
     </div>
-    <div style=" margin-left: 100px">
-      <a href=""><img src="{% static 'assets/img/logo-dark.png' %}" alt="" class="logo-dark"></a>
+    <div style="margin-right: 600px">
+      <a href="{% url 'BlogApp:home' %}"><img src="{% static 'assets/img/logo-dark.png' %}" style="width: 300px;height: 100px;" alt="" class="logo-dark"></a>
     </div>
     <div class="flex min-h-screen flex-col" style="margin-top: auto">
       <main class="flex-grow bg-background pb-14 pt-36 xs:pt-36">

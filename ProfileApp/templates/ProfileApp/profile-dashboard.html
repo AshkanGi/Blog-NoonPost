@@ -6,6 +6,9 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>پیشخوان</title>
 
+    <!-- favicon -->
+    <link rel="icon" sizes="16x16" href="{% static 'assets/img/favicon.png' %}">
+
     <link href="{% static 'assets/css/fonts.css' %}" rel="stylesheet" />
     <link href="{% static 'assets/css/dependencies/swiper.min.css' %}" rel="stylesheet" />
     <link href="{% static 'assets/css/theme.css' %}" rel="stylesheet" />
@@ -938,8 +941,8 @@
         </symbol>
       </svg>
     </div>
-    <div style=" margin-left: 100px">
-      <a href=""><img src="{% static 'assets/img/logo-dark.png' %}" alt="" class="logo-dark"></a>
+    <div style="margin-right: 600px">
+      <a href="{% url 'BlogApp:home' %}"><img src="{% static 'assets/img/logo-dark.png' %}" style="width: 300px;height: 100px;" alt="" class="logo-dark"></a>
     </div>
     <div class="flex min-h-screen flex-col" style="margin-top: auto">
     <!-- Desktop sidebar -->
@@ -1094,13 +1097,13 @@
                         <span class="hidden md:block"></span> علاقه مندی
                       </div>
                     </a>
-                    <a href="{% url 'ProfileApp:recent' %}" class="flex flex-col items-center gap-4 rounded-base dark:bg-yellow-600 p-2 dark:bg-yellow-600 md:flex-row">
+                    <a href="{% url 'ProfileApp:recent' %}" class="flex flex-col items-center gap-4 rounded-base bg-yellow-600 p-2 dark:bg-yellow-600 md:flex-row">
                       <div class="relative rounded-base dark:bg-yellow-600 p-2 dark:bg-yellow-600">
                         <svg class="h-8 w-8 text-white">
                           <use xlink:href="#recent" />
                         </svg>
                         <span
-                          class="absolute -right-1 -top-1 flex h-6 w-6 items-center justify-center rounded-full dark:bg-yellow-600 text-sm font-medium text-white dark:bg-yellow-600 md:hidden">
+                          class="absolute -right-1 -top-1 flex h-6 w-6 items-center justify-center rounded-full bg-yellow-600 text-sm font-medium text-white dark:bg-yellow-600 md:hidden">
                           6
                         </span>
                       </div>
