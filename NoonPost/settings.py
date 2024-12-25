@@ -19,18 +19,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     #My_App
     "AccountApp.apps.AccountappConfig",
-<<<<<<< HEAD
     "BlogApp.apps.BlogappConfig",
+    "ProfileApp.apps.ProfileappConfig",
     #Installed App
     'django_cleanup',
     'ckeditor',
     'jalali_date',
-=======
-    "ProfileApp.apps.ProfileappConfig",
-    #Installed App
-    'django_cleanup',
 
->>>>>>> Profile
 ]
 
 MIDDLEWARE = [
