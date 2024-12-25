@@ -20,10 +20,12 @@ INSTALLED_APPS = [
     #My_App
     "AccountApp.apps.AccountappConfig",
     "BlogApp.apps.BlogappConfig",
+    "ProfileApp.apps.ProfileappConfig",
     #Installed App
     'django_cleanup',
     'ckeditor',
     'jalali_date',
+
 ]
 
 MIDDLEWARE = [
