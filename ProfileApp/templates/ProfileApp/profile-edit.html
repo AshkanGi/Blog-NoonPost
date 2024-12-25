@@ -938,7 +938,10 @@
         </symbol>
       </svg>
     </div>
-    <div class="flex min-h-screen flex-col">
+    <div style=" margin-left: 100px">
+      <a href=""><img src="{% static 'assets/img/logo-dark.png' %}" alt="" class="logo-dark"></a>
+    </div>
+    <div class="flex min-h-screen flex-col" style="margin-top: auto">
       <main class="flex-grow bg-background pb-14 pt-36 xs:pt-36">
         <div class="container">
           <div class="grid grid-cols-12 gap-4">
@@ -1072,7 +1075,6 @@
                       </div>
                     </button>
                   </div>
-                  <!-- national code -->
                   <!-- phone number  -->
                   <div class="col-span-2 sm:col-span-1">
                     <button
@@ -1146,7 +1148,6 @@
                       </div>
                     </button>
                   </div>
-                  <!-- birth date   -->
                 </div>
               </div>
             </div>
@@ -1160,14 +1161,14 @@
         aria-hidden="true"
         class="main-scroll fixed left-0 right-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-full w-full overflow-y-auto overflow-x-hidden p-4 md:inset-0"
       >
-        <div class="relative max-h-full w-full max-w-2xl">
+        <div class="relative max-h-full w-full max-w-md">
           <div class="divide-y overflow-hidden rounded-lg bg-muted shadow ring-1 ring-gray-100 dark:ring-white/5">
             <div class="px-4 py-5 sm:px-6">
               <div class="flex items-center justify-between">
-                <h3 class="md:text-lg">تغییر نام و نام خانوادگی</h3>
+                <h3 class="md:text-lg">تغییر شماره موبایل</h3>
                 <button
                   class=" "
-                  data-modal-hide="fullname-modal"
+                  data-modal-hide="phoneNumber-modal"
                   type="button">
                   <svg class="h-5 w-5">
                     <use xlink:href="#close"></use>
@@ -1186,12 +1187,11 @@
                       type="text"
                       id="name"
                       name="full_name"
-                      class="peer w-full rounded-lg border-none bg-transparent px-4 py-3 placeholder-transparent focus:outline-none focus:ring-0"
+                      class="peer w-full rounded-lg border-none bg-transparent px-4 py-3 text-left placeholder-transparent focus:outline-none focus:ring-0"
                       placeholder="نام و نام خانوادگی "
                     />
                     <span
-                      class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-muted px-2 py-0.5 text-sm text-text/60 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-focus:top-0 peer-focus:text-sm">
-                      نام و نام خانوادگی
+                      class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-muted px-2 py-0.5 text-sm text-text/60 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-focus:top-0 peer-focus:text-sm">                      نام و نام خانوادگی
                     </span>
                   </label>
                   <div class="my-2 h-6 text-red-500 dark:text-red-400"></div>
@@ -1202,6 +1202,12 @@
                   ثبت
                 </button>
               </div>
+              <br>
+              {% if messages %}
+                  {% for message in messages %}
+                    <p style="color: #e5e7eb">{{ message }}</p>
+                  {% endfor %}
+              {% endif %}
             </form>
             </div>
           </div>
@@ -1249,16 +1255,17 @@
                 </label>
                 <div class="my-2 h-6 text-red-500 dark:text-red-400"></div>
               </div>
-                {% if messages %}
-                  {% for message in messages %}
-                    <p style="color: #e5e7eb">{{ message }}</p>
-                  {% endfor %}
-                {% endif %}
               <div class="flex items-center justify-end gap-x-4">
                 <button class="btn-primary w-full py-3">
-                  ارسال کد تایید
+                  ثبت
                 </button>
               </div>
+              <br>
+              {% if messages %}
+                {% for message in messages %}
+                  <p style="color: #e5e7eb">{{ message }}</p>
+                {% endfor %}
+              {% endif %}
             </form>
             </div>
           </div>
@@ -1304,16 +1311,17 @@
                 </label>
                 <div class="my-2 h-6 text-red-500 dark:text-red-400"></div>
               </div>
-                {% if messages %}
-                  {% for message in messages %}
-                    <p style="color: #e5e7eb">{{ message }}</p>
-                  {% endfor %}
-                {% endif %}
               <div class="flex items-center justify-end gap-x-4">
                 <button class="btn-primary w-full py-3">
-                  ارسال کد تایید
+                  ثبت
                 </button>
               </div>
+              <br>
+              {% if messages %}
+                {% for message in messages %}
+                  <p style="color: #e5e7eb">{{ message }}</p>
+                {% endfor %}
+              {% endif %}
             </form>
             </div>
           </div>
@@ -1327,13 +1335,10 @@
         class="main-scroll fixed left-0 right-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-full w-full overflow-y-auto overflow-x-hidden p-4 md:inset-0"
       >
         <div class="relative max-h-full w-full max-w-lg">
-          <div
-            class="divide-y overflow-hidden rounded-lg bg-muted shadow ring-1 ring-gray-100 dark:ring-white/5"
-          >
+          <div class="divide-y overflow-hidden rounded-lg bg-muted shadow ring-1 ring-gray-100 dark:ring-white/5">
             <div class="px-4 py-5 sm:px-6">
               <div class="flex items-center justify-between">
                 <h3 class="md:text-lg">تغییر کلمه عبور</h3>
-
                 <button
                   class=" "
                   data-modal-hide="password-modal"
@@ -1342,134 +1347,83 @@
                   <svg class="h-5 w-5">
                     <use xlink:href="#close"></use>
                   </svg>
-
                   <span class="sr-only">Close Modal</span>
                 </button>
               </div>
             </div>
             <div class="space-y-6 px-4 py-5 sm:p-6">
+            <form method="post" action="{% url 'ProfileApp:change_password' %}">
+            {% csrf_token %}
               <div>
-                <form novalidate="">
                   <div class="mb-4">
                     <div>
-                      <label
-                        for="currentPassword"
-                        class="relative block rounded-lg border shadow-base"
-                      >
+                      <label for="currentPassword" class="relative block rounded-lg border shadow-base">
                         <input
-                          type="text"
+                          type="password"
                           id="currentPassword"
+                          name="password"
                           class="peer w-full rounded-lg border-none bg-transparent px-4 py-3 placeholder-transparent focus:outline-none focus:ring-0"
                           placeholder="کلمه عبور فعلی"
                         />
-
-                        <span
-                          class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-muted px-2 py-0.5 text-sm text-text/60 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-focus:top-0 peer-focus:text-sm"
-                        >
+                        <span class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-muted px-2 py-0.5 text-sm text-text/60 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-focus:top-0 peer-focus:text-sm">
                           کلمه عبور فعلی
                         </span>
                       </label>
-                      <div
-                        class="my-2 h-6 text-red-500 dark:text-red-400"
-                      ></div>
+                      <div class="my-2 h-6 text-red-500 dark:text-red-400"></div>
                     </div>
                   </div>
                   <div class="mb-4">
                     <div>
-                      <label
-                        for="password"
-                        class="relative block rounded-lg border shadow-base"
-                      >
+                      <label for="password" class="relative block rounded-lg border shadow-base">
                         <input
-                          type="text"
+                          type="password"
                           id="password"
+                          name="new_password"
                           class="peer w-full rounded-lg border-none bg-transparent px-4 py-3 placeholder-transparent focus:outline-none focus:ring-0"
                           placeholder="کلمه عبور جدید"
                         />
-
-                        <span
-                          class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-muted px-2 py-0.5 text-sm text-text/60 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-focus:top-0 peer-focus:text-sm"
-                        >
+                        <span class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-muted px-2 py-0.5 text-sm text-text/60 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-focus:top-0 peer-focus:text-sm">
                           کلمه عبور جدید
                         </span>
                       </label>
-                      <div
-                        class="my-2 h-6 text-red-500 dark:text-red-400"
-                      ></div>
-                    </div>
-                    <div>
-                      <div class="mb-4 flex items-center gap-x-2">
-                        <div
-                          class="h-[3px] w-full rounded-full bg-background dark:bg-zinc-800"
-                        ></div>
-                        <div
-                          class="h-[3px] w-full rounded-full bg-background dark:bg-zinc-800"
-                        ></div>
-                        <div
-                          class="h-[3px] w-full rounded-full bg-background dark:bg-zinc-800"
-                        ></div>
-                        <div
-                          class="h-[3px] w-full rounded-full bg-background dark:bg-zinc-800"
-                        ></div>
-                      </div>
-                      <div>
-                        <ul
-                          class="select-none list-disc space-y-2 px-4 text-xs text-slate-500 dark:text-slate-400 md:text-sm"
-                        >
-                          <li>
-                            <p>حداقل 6 حرف</p>
-                          </li>
-                          <li>
-                            <p>شامل عدد</p>
-                          </li>
-                          <li>
-                            <p>شامل یک حرف بزرگ</p>
-                          </li>
-                          <li>
-                            <p>شامل یک حرف کوچک</p>
-                          </li>
-                        </ul>
-                      </div>
+                      <div class="my-2 h-6 text-red-500 dark:text-red-400"></div>
                     </div>
                   </div>
                   <div class="mb-4">
                     <div>
-                      <label
-                        for="family"
-                        class="relative block rounded-lg border shadow-base"
-                      >
+                      <label for="family" class="relative block rounded-lg border shadow-base">
                         <input
-                          type="text"
+                          type="password"
                           id="family"
+                          name="confirm_password"
                           class="peer w-full rounded-lg border-none bg-transparent px-4 py-3 placeholder-transparent focus:outline-none focus:ring-0"
                           placeholder="تکرار کلمه عبور جدید"
                         />
-
-                        <span
-                          class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-muted px-2 py-0.5 text-sm text-text/60 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-focus:top-0 peer-focus:text-sm"
-                        >
+                        <span class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-muted px-2 py-0.5 text-sm text-text/60 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-focus:top-0 peer-focus:text-sm">
                           تکرار کلمه عبور جدید
                         </span>
                       </label>
-                      <div
-                        class="my-2 h-6 text-red-500 dark:text-red-400"
-                      ></div>
+                      <div class="my-2 h-6 text-red-500 dark:text-red-400"></div>
                     </div>
                   </div>
-                </form>
               </div>
               <div class="flex items-center justify-end gap-x-4">
-                <button
-                  class="btn-primary w-full px-4 py-2 xs:w-fit"
-                  type="button"
-                >
+                <button class="btn-primary w-full py-3">
                   تغییر کلمه عبور
                 </button>
               </div>
+                <br>
+              {% if messages %}
+                {% for message in messages %}
+                  <p style="color: #e5e7eb">{{ message }}</p>
+                {% endfor %}
+              {% endif %}
+            </form>
             </div>
           </div>
         </div>
       </div>
+    </div>
     </div>
   </body>
 </html>

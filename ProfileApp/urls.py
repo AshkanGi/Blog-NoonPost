@@ -11,6 +11,7 @@ url_patterns_data = [
     ('update_full_name', views.UpdateFullName),
     ('update_phone', views.UpdatePhone),
     ('update_email', views.UpdateEmail),
+    ('change_password', views.ChangePassword),
 ]
 
 urlpatterns = [path(f'{pattern}/', view.as_view(), name=pattern) for pattern, view in url_patterns_data]

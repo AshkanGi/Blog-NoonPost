@@ -9,12 +9,10 @@ class UpdateEmailForm(forms.Form):
 class UpdatePhoneForm(forms.Form):
     phone = forms.CharField(max_length=11, widget=forms.TextInput(attrs={'class': 'peer w-full rounded-lg border-none bg-transparent px-4 py-3 text-left placeholder-transparent focus:outline-none focus:ring-0'}))
 
-    def clean_username(self):
-        username = self.cleaned_data.get('phone')
-        phone = r'^\d{11}$'
-        if re.match(phone, username):
-            return username
+    def clean_phone(self):
+        phone = self.cleaned_data.get('phone')
+        pattern = r'^\d{11}$'
+        if re.match(pattern, phone):
+            return phone
         else:
-            raise forms.ValidationError('ورودی معتبر نیست. لطفا یک شماره تلفن 11 رقمی وارد کنید')
-
-
+            raise forms.ValidationError('ورودی معتبر نیست. لطفا یک شماره تلفن 11 رقمی وارد کنید.')
