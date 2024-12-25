@@ -1,0 +1,109 @@
+{% load jalali_tags %}
+{% load static %}
+<div class="col-lg-4 max-width">
+    <!--widget-latest-posts-->
+    <div class="widget ">
+        <div class="section-title">
+            <h5>نوشته های اخیر</h5>
+        </div>
+        <ul class="widget-latest-posts">
+            {% for article in latest_articles %}
+            <li class="last-post">
+                <div class="image">
+                    {% if article.image %}
+                    <a href="{{ article.get_absolute_url }}">
+                        <img src="{{ article.image.url }}" alt="...">
+                    </a>
+                    {% else %}
+                    <a href="{{ article.get_absolute_url }}">
+                        <img src="{% static 'assets/img/image_not_available.jpg' %}" alt="...">
+                    </a>
+                    {% endif %}
+                </div>
+
+                <div class="content">
+                    <p>
+                        <a href="{{ article.get_absolute_url }}">{{ article.title }}</a>
+                    </p>
+                    <small>
+                        <span class="icon_clock_alt"></span>{{ article.created_at|to_jalali:'%Y/%m/%d' }}</small>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <!--/-->
+
+    <!--widget-categories-->
+    <div class="widget">
+        <div class="section-title">
+            <h5>دسته بندی ها</h5>
+        </div>
+        <ul class="widget-categories">
+            {% for category in categories %}
+            <li>
+                <a href="{% url 'BlogApp:category_article' category.slug %}" class="categorie">{{ category.title }}</a>
+                <span class="ml-auto">{{ category.articles.count }} مقاله</span>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <!--/-->
+
+    <!--widget-instagram-->
+    <div class="widget">
+        <div class="section-title">
+            <h5>اینستگرام</h5>
+        </div>
+        <ul class="widget-instagram">
+            <li>
+                <a class="image" href="#">
+                    <img src="{% static 'assets/img/instagram/1.jpg' %}" alt="">
+                </a>
+            </li>
+            <li>
+                <a class="image" href="#">
+                    <img src="{% static 'assets/img/instagram/2.jpg' %}" alt="">
+                </a>
+            </li>
+            <li>
+                <a class="image" href="#">
+                    <img src="{% static 'assets/img/instagram/3.jpg' %}" alt="">
+                </a>
+            </li>
+            <li>
+                <a class="image" href="#">
+                    <img src="{% static 'assets/img/instagram/4.jpg' %}" alt="">
+                </a>
+            </li>
+            <li>
+                <a class="image" href="#">
+                    <img src="{% static 'assets/img/instagram/5.jpg' %}" alt="">
+                </a>
+            </li>
+            <li>
+                <a class="image" href="#">
+                    <img src="{% static 'assets/img/instagram/6.jpg' %}" alt="">
+                </a>
+            </li>
+        </ul>
+
+    </div>
+    <!--/-->
+    <!--widget-tags-->
+    <div class="widget">
+        <div class="section-title">
+            <h5>برچسب ها</h5>
+        </div>
+        <div class="widget-tags">
+            <ul class="list-inline">
+                {% for t in tag %}
+                    <li>
+                        <a href="{% url 'BlogApp:tag_article' t.slug %}">{{ t }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <!--/-->
+</div>

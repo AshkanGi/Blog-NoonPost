@@ -1,0 +1,200 @@
+<!doctype html>
+{% load static %}
+<html lang="fa">
+<head>
+    <!-- Meta -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- favicon -->
+    <link rel="icon" sizes="16x16" href="{% static 'assets/img/favicon.png' %}">
+
+    <!-- Title -->
+    <title>{% block title %}{% endblock %}</title>
+
+    <!-- CSS Plugins -->
+    <link rel="stylesheet" href="{% static 'assets/css/all.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/elegant-font-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/owl.carousel.css' %}">
+
+    <!-- main style -->
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/custom.css' %}">
+</head>
+
+<body class="rtl">
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container-fluid">
+            <!--logo-->
+            <div class="logo">
+                <a href="{% url 'BlogApp:home' %}">
+                    <img src="{% static 'assets/img/logo-dark.png' %}" alt="" class="logo-dark">
+                    <img src="{% static 'assets/img/logo-white.png' %}" alt="" class="logo-white">
+                </a>
+            </div>
+            <!--/-->
+
+            <!--navbar-collapse-->
+            <div class="collapse navbar-collapse" id="main_nav">
+                <ul class="navbar-nav ml-auto mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'BlogApp:home' %}">صفحه اصلی</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'article_list' %}active{% endif %}" href="{% url 'BlogApp:article_list' %}">مقالات</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}" href="{% url 'BlogApp:contact' %}">ارتباط با ما</a>
+                    </li>
+
+                    <li class="nav-item">
+                    {% if request.user.is_authenticated %}
+                        <span style="font-weight: bold">{{ request.user.full_name }} /</span>
+                        <a class="nav-link" href="{% url 'AccountApp:logout' %}">خروج</a>
+                    {% else %}
+                        <a class="nav-link " href="{% url 'AccountApp:register' %}">ثبت نام / ورود</a>
+                    {% endif %}
+                    </li>
+
+                </ul>
+            </div>
+            <!--/-->
+
+            <!--navbar-right-->
+            <div class="navbar-right ml-auto">
+                <div class="theme-switch-wrapper">
+                    <label class="theme-switch" for="checkbox">
+                        <input type="checkbox" id="checkbox" />
+                        <div class="slider round"></div>
+                    </label>
+                </div>
+                <div class="social-icones">
+                    <ul class="list-inline">
+                        <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                        <li>
+                            <a href="#">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fab fa-youtube"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="search-icon">
+                    <i class="icon_search"></i>
+                </div>
+
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main_nav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+    <!--/-->
+
+    {% block content %} {% endblock %}
+
+    <!--newslettre-->
+    <section class="newslettre">
+        <div class="container-fluid">
+            <div class="newslettre-width text-center">
+                <div class="newslettre-info">
+                    <h5>عضویت در خبرنامه</h5>
+                    <p> رایگان ثبت نام کنید و اولین نفری باشید که از پست های جدید مطلع می شوید. </p>
+                </div>
+                <form action="{% url 'BlogApp:subscribe' %}" method="post" class="newslettre-form">
+                    {% csrf_token %}
+                    <div class="form-flex">
+                        <div class="form-group">
+                            <input type="email" name="email" id="email" class="form-control" placeholder="آدرس ایمیل" required="required">
+                        </div>
+                        <button class="submit-btn" type="submit">عضویت</button>
+                    </div>
+                </form>
+                <div class="social-icones">
+                    <ul class="list-inline">
+                        <li>
+                            <a href="#">
+                                <i class="fab fa-facebook-f"></i>فیسبوک</a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fab fa-twitter"></i>توییتر </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fab fa-instagram"></i>اینستگرام </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fab fa-youtube"></i>یوتیوب</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--footer-->
+    <footer class="footer">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="copyright">
+                        <p>کپی رایت © 2021. کلیه حقوق محفوظ است</p>
+                    </div>
+                    <div class="back">
+                        <a href="#" class="back-top">
+                            <i class="arrow_up"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!--Search-form-->
+    <div class="search">
+        <div class="container-fluid">
+            <div class="search-width  text-center">
+                <button type="button" class="close">
+                    <i class="icon_close"></i>
+                </button>
+                <form class="search-form" method="get" action="{% url 'BlogApp:search_article' %}">
+                    <input type="search" name="search" value="" placeholder="مقاله مورد نظرت رو جستجو کن">
+                    <button type="submit" class="search-btn">جستجو</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--/-->
+
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="{% static 'assets/js/jquery-3.5.0.min.js' %}"></script>
+    <script src="{% static 'assets/js/popper.min.js' %}"></script>
+    <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+
+    <!-- JS Plugins  -->
+    <script src="{% static 'assets/js/ajax-contact.js' %}"></script>
+    <script src="{% static 'assets/js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'assets/js/switch.js' %}"></script>
+
+    <!-- JS main  -->
+    <script src="{% static 'assets/js/main.js' %}"></script>
+</body>
+
+
+</html>

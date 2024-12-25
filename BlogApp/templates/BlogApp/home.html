@@ -1,0 +1,226 @@
+{% extends 'base.html' %}
+{% block title %}نانپوست{% endblock %}
+{% load jalali_tags %}
+{% load static %}
+
+{% block content %}
+
+    <!--carousel-hero-->
+    <section class="section carousel-hero">
+        <div class="owl-carousel">
+            {% for article in popular_articles %}
+                {% if article.image %}
+                <div class="hero d-flex align-items-center " style="background-image: url({{ article.image.url }})">
+                {% else %}
+                <div class="hero d-flex align-items-center " style="background-image: url({% static 'img/image_not_available.jpg' %})">
+                {% endif %}
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+                            <div class="hero-content">
+                                {% for category in article.category.all %}
+                                    <a href="{% url 'BlogApp:category_article' category.slug %}" class="categorie">{{ category.title }}</a>
+                                {% endfor %}
+                                <h2>
+                                    <a href="{{ article.get_absolute_url }}">{{ article.title }}</a>
+                                </h2>
+
+                                <div class="post-card-info">
+                                    <ul class="list-inline">
+                                        <li>
+                                            <a href="author.html">{{ article.author.full_name }}</a>
+                                        </li>
+                                        <li class="dot"></li>
+                                        <li>{{ article.created_at|to_jalali:'%Y/%m/%d' }}</li>
+                                        <li class="dot"></li>
+                                        {% if article.view > 0 %}
+                                            <li>{{ article.view }} بازدید</li>
+                                        {% else %}
+                                            <li>صفر بازدید</li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+    <!--/-->
+
+    <!--masonry-layout-->
+    <section class="mt-40 masonry-layout">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h3 style="color:#F67280;margin-bottom: 20px">● مقالات برنامه نویسی</h3>
+                    <div class="card-columns">
+                        <!--Post-4-->
+                        {% for article in programming_articles %}
+                            <div class="card">
+                            <div class="post-card">
+                                {% if article.image %}
+                                    <div class="post-card-image">
+                                        <a href="{{ article.get_absolute_url }}"><img src="{{ article.image.url }}" style="width: 345px" alt=""></a>
+                                    </div>
+                                {% else %}
+                                    <div class="post-card-image">
+                                        <a href="{{ article.get_absolute_url }}"><img src="{% static 'assets/img/image_not_available.jpg' %}" style="width: 345px" alt=""></a>
+                                    </div>
+                                {% endif %}
+                                <div class="post-card-content">
+                                    {% for category in article.category.all %}
+                                        <a href="{% url 'BlogApp:category_article' category.slug %}" class="categorie">{{ category.title }}</a>
+                                    {% endfor %}
+                                    <h5>
+                                        <a href="{{ article.get_absolute_url }}">{{ article.title|truncatewords:'6' }}</a>
+                                    </h5>
+                                    <p>{{ article.body|safe|truncatewords:'7' }}</p>
+                                    <div class="post-card-info">
+                                        <ul class="list-inline">
+                                            <li>
+                                                <a href="author.html">
+                                                    {% if article.author.image %}
+                                                        <img src="{{ article.author.image.url }}" alt="{{ article.author.full_name }}">
+                                                    {% else %}
+                                                        <img src="{% static 'assets/img/default_profile_image.png' %}" alt="{{ article.author.full_name }}">
+                                                    {% endif %}
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="author.html">{{ article.author.full_name }}</a>
+                                            </li>
+                                            <li class="dot"></li>
+                                            <li>{{ article.created_at|to_jalali:'%Y/%m/%d' }}</li>
+                                            <li class="dot"></li>
+                                            {% if article.view > 0 %}
+                                                <li>{{ article.view }} بازدید</li>
+                                            {% else %}
+                                                <li>صفر بازدید</li>
+                                            {% endif %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        <!--/-->
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <h3 style="color:#F67280;margin-bottom: 20px">● مقالات غذا و آشپزی</h3>
+                    <div class="card-columns">
+                        <!--Post-4-->
+                        {% for article in food_cooking_articles %}
+                            <div class="card">
+                            <div class="post-card">
+                                {% if article.image %}
+                                    <div class="post-card-image">
+                                        <a href="{{ article.get_absolute_url }}"><img src="{{ article.image.url }}" style="width: 345px" alt=""></a>
+                                    </div>
+                                {% else %}
+                                    <div class="post-card-image">
+                                        <a href="{{ article.get_absolute_url }}"><img src="{% static 'assets/img/image_not_available.jpg' %}" style="width: 345px" alt=""></a>
+                                    </div>
+                                {% endif %}
+                                <div class="post-card-content">
+                                    {% for category in article.category.all %}
+                                        <a href="{% url 'BlogApp:category_article' category.slug %}" class="categorie">{{ category.title }}</a>
+                                    {% endfor %}
+                                    <h5>
+                                        <a href="{{ article.get_absolute_url }}">{{ article.title|truncatewords:'6' }}</a>
+                                    </h5>
+                                    <p>{{ article.body|safe|truncatewords:'7' }}</p>
+                                    <div class="post-card-info">
+                                        <ul class="list-inline">
+                                            <li>
+                                                <a href="author.html">
+                                                    {% if article.author.image %}
+                                                        <img src="{{ article.author.image.url }}" alt="{{ article.author.full_name }}">
+                                                    {% else %}
+                                                        <img src="{% static 'assets/img/default_profile_image.png' %}" alt="{{ article.author.full_name }}">
+                                                    {% endif %}
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="author.html">{{ article.author.full_name }}</a>
+                                            </li>
+                                            <li class="dot"></li>
+                                            <li>{{ article.created_at|to_jalali:'%Y/%m/%d' }}</li>
+                                            <li class="dot"></li>
+                                            {% if article.view > 0 %}
+                                                <li>{{ article.view }} بازدید</li>
+                                            {% else %}
+                                                <li>صفر بازدید</li>
+                                            {% endif %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        <!--/-->
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <h3 style="color:#F67280;margin-bottom: 20px">● مقالات ورزشی</h3>
+                    <div class="card-columns">
+                        <!--Post-4-->
+                        {% for article in sport_articles %}
+                            <div class="card">
+                            <div class="post-card">
+                                {% if article.image %}
+                                    <div class="post-card-image">
+                                        <a href="{{ article.get_absolute_url }}"><img src="{{ article.image.url }}" style="width: 345px" alt=""></a>
+                                    </div>
+                                {% else %}
+                                    <div class="post-card-image">
+                                        <a href="{{ article.get_absolute_url }}"><img src="{% static 'assets/img/image_not_available.jpg' %}" style="width: 345px" alt=""></a>
+                                    </div>
+                                {% endif %}
+                                <div class="post-card-content">
+                                    {% for category in article.category.all %}
+                                        <a href="{% url 'BlogApp:category_article' category.slug %}" class="categorie">{{ category.title }}</a>
+                                    {% endfor %}
+                                    <h5>
+                                        <a href="{{ article.get_absolute_url }}">{{ article.title|truncatewords:'6' }}</a>
+                                    </h5>
+                                    <p>{{ article.body|safe|truncatewords:'7' }}</p>
+                                    <div class="post-card-info">
+                                        <ul class="list-inline">
+                                            <li>
+                                                <a href="author.html">
+                                                    {% if article.author.image %}
+                                                        <img src="{{ article.author.image.url }}" alt="{{ article.author.full_name }}">
+                                                    {% else %}
+                                                        <img src="{% static 'assets/img/default_profile_image.png' %}" alt="{{ article.author.full_name }}">
+                                                    {% endif %}
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="author.html">{{ article.author.full_name }}</a>
+                                            </li>
+                                            <li class="dot"></li>
+                                            <li>{{ article.created_at|to_jalali:'%Y/%m/%d' }}</li>
+                                            <li class="dot"></li>
+                                            {% if article.view > 0 %}
+                                                <li>{{ article.view }} بازدید</li>
+                                            {% else %}
+                                                <li>صفر بازدید</li>
+                                            {% endif %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        <!--/-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--/-->
+{% endblock %}
