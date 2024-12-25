@@ -12,4 +12,5 @@ urlpatterns = [
     path('contact/', views.contact, name='contact'),
     path('about/', views.about, name='about'),
     path('subscribe/', views.subscribe, name='subscribe'),
+    re_path(r'like/(?P<slug>[-\w]+)/', views.LikeView.as_view(), name='like'),
 ]

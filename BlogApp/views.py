@@ -1,5 +1,8 @@
+from django.contrib import messages
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Article, Category, Tag, Comment
+from django.views import View
+from urllib.parse import quote
+from .models import Article, Category, Tag, Comment, Like
 from django.core.paginator import Paginator
 from .forms import MessageForm, SubscriberForm
 
@@ -105,3 +108,15 @@ def subscribe(request):
         if form.is_valid():
             form.save()
             return redirect('BlogApp:home')
+
+
+class LikeView(View):
+    def get(self, request, slug):
+        if not request.user.is_authenticated:
+            messages.error(request, 'برای لایک کردن باید وارد شوید.')
+            return redirect('article_detail', slug=slug)
+        article = get_object_or_404(Article, slug=slug)
+        like, created = Like.objects.get_or_create(article=article, user=request.user)
+        if not created:
+            like.delete()
+        return redirect(f'/detail/{quote(slug)}/')
