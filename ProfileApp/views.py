@@ -1,10 +1,12 @@
+from slugify import slugify
 from django.views import View
 from AccountApp.models import User
+from BlogApp.models import Article
 from django.contrib import messages
 from django.contrib.auth import login
 from django.shortcuts import render, redirect
+from .forms import UpdateEmailForm, UpdatePhoneForm, ArticleForm
 from django.contrib.auth.hashers import make_password, check_password
-from .forms import UpdateEmailForm, UpdatePhoneForm
 
 
 class ProfileDashboard(View):
@@ -97,3 +99,27 @@ class ChangePassword(View):
         else:
             messages.error(request, 'رمز عبور فعلی اشتباه است.')
         return redirect('ProfileApp:edit')
+
+
+class ArticleCreateView(View):
+    def get(self, request):
+        form = ArticleForm()
+        return render(request, 'ProfileApp/profile-new-article.html', {'form': form})
+
+    def post(self, request):
+        form = ArticleForm(request.POST, request.FILES)
+        if form.is_valid():
+            cd = form.cleaned_data
+            article = Article(
+                author=request.user,
+                title=cd['title'],
+                slug=slugify(cd['title'], allow_unicode=True),
+                body=cd['body'],
+                image=request.FILES.get('image'),
+                status=cd.get('status', False),
+            )
+            article.save()
+            article.category.set(cd['category'])
+            article.tags.set(cd.get('tags', []))
+            return redirect('BlogApp:home')
+        return render(request, 'ProfileApp/profile-new-article.html', {'form': form})

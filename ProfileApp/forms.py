@@ -1,6 +1,8 @@
 import re
 from django import forms
 
+from BlogApp.models import Article
+
 
 class UpdateEmailForm(forms.Form):
     email = forms.EmailField(max_length=225, widget=forms.TextInput(attrs={'class': 'peer w-full rounded-lg border-none bg-transparent p-4 text-left placeholder-transparent focus:outline-none focus:ring-0'}))
@@ -16,3 +18,9 @@ class UpdatePhoneForm(forms.Form):
             return phone
         else:
             raise forms.ValidationError('ورودی معتبر نیست. لطفا یک شماره تلفن 11 رقمی وارد کنید.')
+
+
+class ArticleForm(forms.ModelForm):
+    class Meta:
+        model = Article
+        fields = ['title', 'body', 'image', 'category', 'tags', 'status']

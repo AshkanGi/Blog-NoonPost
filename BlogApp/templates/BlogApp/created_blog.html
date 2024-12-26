@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نوشتن مقاله جدید</title>
+    <script src="https://cdn.ckeditor.com/4.20.2/standard/ckeditor.js"></script>
+    <style>
+        body {
+            font-family: 'Tahoma', sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            direction: rtl;
+        }
+        h1 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        textarea {
+            height: 300px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 15px;
+            align-self: flex-end;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+<form method="post">
+{% csrf_token %}
+    <div class="container">
+
+      <h1>نوشتن مقاله جدید</h1>
+        <div class="container">عنوان:
+          {{ form.title }}
+        </div>
+        <div class="container">تگ ها:
+            {{ form.tags }}
+        </div>
+        <div class="container">دسته بندی:
+            {{ form.category }}
+        </div>
+        <div class="container">
+          <textarea name="body" id="editor"></textarea>
+          <button type="submit">ذخیره مقاله</button>
+        </div>
+    </div>
+    </form>
+    <script>
+        CKEDITOR.replace('editor', {
+            language: 'fa',
+            contentsLangDirection: 'rtl',
+        });
+    </script>
+</body>
+</html>

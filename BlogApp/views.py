@@ -1,7 +1,10 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from .models import Article, Category, Tag, Comment
+from django.views import View
+from urllib.parse import quote
+from django.contrib import messages
 from django.core.paginator import Paginator
 from .forms import MessageForm, SubscriberForm
+from .models import Article, Category, Tag, Comment, Like
+from django.shortcuts import render, get_object_or_404, redirect
 
 
 def get_pages_to_show(current_page, total_pages):
@@ -30,8 +33,12 @@ def home(request):
 def article_detail(request, slug):
     tag = Tag.objects.all()
     article = get_object_or_404(Article, slug=slug)
-    # article.view += 1
-    # article.save()
+    viewed_articles = request.session.get('viewed_articles', [])
+    if article.id not in viewed_articles:
+        article.view += 1
+        article.save(update_fields=['view'])
+        viewed_articles.append(article.id)
+        request.session['viewed_articles'] = viewed_articles
     if request.method == 'POST':
         body = request.POST.get('body')
         Comment.objects.create(body=body, article=article, user=request.user)
@@ -105,3 +112,15 @@ def subscribe(request):
         if form.is_valid():
             form.save()
             return redirect('BlogApp:home')
+
+
+class LikeView(View):
+    def get(self, request, slug):
+        if not request.user.is_authenticated:
+            messages.error(request, 'برای لایک کردن باید وارد شوید.')
+            return redirect('article_detail', slug=slug)
+        article = get_object_or_404(Article, slug=slug)
+        like, created = Like.objects.get_or_create(article=article, user=request.user)
+        if not created:
+            like.delete()
+        return redirect(f'/detail/{quote(slug)}/')
