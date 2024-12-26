@@ -8,6 +8,7 @@ url_patterns_data = [
     ('favorite', views.ProfileFavorites),
     ('recent', views.ProfileRecent),
     ('edit', views.ProfileEdit),
+    ('new_article', views.ArticleCreateView),
     ('update_full_name', views.UpdateFullName),
     ('update_phone', views.UpdatePhone),
     ('update_email', views.UpdateEmail),
