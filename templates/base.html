@@ -47,13 +47,23 @@
                         <a class="nav-link {% if request.resolver_match.url_name == 'article_list' %}active{% endif %}" href="{% url 'BlogApp:article_list' %}">مقالات</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}" href="{% url 'BlogApp:about' %}">درباره ما</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}" href="{% url 'BlogApp:contact' %}">ارتباط با ما</a>
                     </li>
 
                     <li class="nav-item">
                     {% if request.user.is_authenticated %}
-                        <span style="font-weight: bold">{{ request.user.full_name }} /</span>
-                        <a class="nav-link" href="{% url 'AccountApp:logout' %}">خروج</a>
+                        {% if request.user.image %}
+                            <a class="nav-link" href="{% url 'ProfileApp:dashboard' %}">
+                                <img src="{{ request.user.image.url }}" style="width: 30px;height: 30px;border-radius: 30px" alt="{{ request.user.full_name }}">
+                            </a>
+                        {% else %}
+                            <a class="nav-link" href="{% url 'ProfileApp:dashboard' %}">
+                                <img src="{% static 'assets/img/default_profile_image.png' %}" style="width: 30px;height: 30px;border-radius: 30px" alt="{{ request.user.full_name }}">
+                            </a>
+                        {% endif %}
                     {% else %}
                         <a class="nav-link " href="{% url 'AccountApp:register' %}">ثبت نام / ورود</a>
                     {% endif %}

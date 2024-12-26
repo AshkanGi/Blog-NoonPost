@@ -10,5 +10,6 @@ urlpatterns = [
     re_path(r'tag/(?P<slug>[-\w]+)/', views.tag_article, name='tag_article'),
     path('search/', views.search, name='search_article'),
     path('contact/', views.contact, name='contact'),
+    path('about/', views.about, name='about'),
     path('subscribe/', views.subscribe, name='subscribe'),
 ]
