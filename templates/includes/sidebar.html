@@ -12,18 +12,18 @@
                 <div class="image">
                     {% if article.image %}
                     <a href="{{ article.get_absolute_url }}">
-                        <img src="{{ article.image.url }}" alt="...">
+                        <img src="{{ article.image.url }}" alt="{{ article.title|truncatewords:'6' }}">
                     </a>
                     {% else %}
                     <a href="{{ article.get_absolute_url }}">
-                        <img src="{% static 'assets/img/image_not_available.jpg' %}" alt="...">
+                        <img src="{% static 'assets/img/image_not_available.jpg' %}" alt="{{ article.title|truncatewords:'6' }}">
                     </a>
                     {% endif %}
                 </div>
 
                 <div class="content">
                     <p>
-                        <a href="{{ article.get_absolute_url }}">{{ article.title }}</a>
+                        <a href="{{ article.get_absolute_url }}">{{ article.title|truncatewords:'6' }}</a>
                     </p>
                     <small>
                         <span class="icon_clock_alt"></span>{{ article.created_at|to_jalali:'%Y/%m/%d' }}</small>

@@ -3,6 +3,7 @@ from urllib.parse import quote
 from django.contrib import messages
 from django.core.paginator import Paginator
 from .forms import MessageForm, SubscriberForm
+from AccountApp.models import User
 from .models import Article, Category, Tag, Comment, Like
 from django.shortcuts import render, get_object_or_404, redirect
 
@@ -78,6 +79,17 @@ def tag_article(request, slug):
     return render(request, 'BlogApp/tag_article.html', {'tag': tag, 'tags': tags, 'articles': object_list, 'pages_to_show': pages_to_show})
 
 
+def author_detail(request, author_id):
+    author = get_object_or_404(User, id=author_id)
+    articles = Article.objects.filter(status=True, author=author).order_by('-created_at')
+    page_number = request.GET.get('page')
+    paginator = Paginator(articles, 6)
+    object_list = paginator.get_page(page_number)
+    pages_to_show = get_pages_to_show(object_list.number, paginator.num_pages)
+    return render(request, 'BlogApp/author_detail.html', {'author': author, 'articles': object_list,
+                                                          'pages_to_show': pages_to_show})
+
+
 def search(request):
     tag = Tag.objects.all()
     search_article = request.GET.get('search')
@@ -118,7 +130,7 @@ class LikeView(View):
     def get(self, request, slug):
         if not request.user.is_authenticated:
             messages.error(request, 'برای لایک کردن باید وارد شوید.')
-            return redirect('article_detail', slug=slug)
+            return redirect('BlogApp:article_detail', slug=slug)
         article = get_object_or_404(Article, slug=slug)
         like, created = Like.objects.get_or_create(article=article, user=request.user)
         if not created:

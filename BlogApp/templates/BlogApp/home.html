@@ -28,7 +28,7 @@
                                 <div class="post-card-info">
                                     <ul class="list-inline">
                                         <li>
-                                            <a href="author.html">{{ article.author.full_name }}</a>
+                                            <a href="{% url 'BlogApp:author_detail' article.author.id %}">{{ article.author.full_name }}</a>
                                         </li>
                                         <li class="dot"></li>
                                         <li>{{ article.created_at|to_jalali:'%Y/%m/%d' }}</li>
@@ -81,7 +81,7 @@
                                     <div class="post-card-info">
                                         <ul class="list-inline">
                                             <li>
-                                                <a href="author.html">
+                                                <a href="{% url 'BlogApp:author_detail' article.author.id %}">
                                                     {% if article.author.image %}
                                                         <img src="{{ article.author.image.url }}" alt="{{ article.author.full_name }}">
                                                     {% else %}
@@ -90,7 +90,7 @@
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="author.html">{{ article.author.full_name }}</a>
+                                                <a href="{% url 'BlogApp:author_detail' article.author.id %}">{{ article.author.full_name }}</a>
                                             </li>
                                             <li class="dot"></li>
                                             <li>{{ article.created_at|to_jalali:'%Y/%m/%d' }}</li>
@@ -136,7 +136,7 @@
                                     <div class="post-card-info">
                                         <ul class="list-inline">
                                             <li>
-                                                <a href="author.html">
+                                                <a href="{% url 'BlogApp:author_detail' article.author.id %}">
                                                     {% if article.author.image %}
                                                         <img src="{{ article.author.image.url }}" alt="{{ article.author.full_name }}">
                                                     {% else %}
@@ -145,7 +145,7 @@
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="author.html">{{ article.author.full_name }}</a>
+                                                <a href="{% url 'BlogApp:author_detail' article.author.id %}">{{ article.author.full_name }}</a>
                                             </li>
                                             <li class="dot"></li>
                                             <li>{{ article.created_at|to_jalali:'%Y/%m/%d' }}</li>
@@ -191,7 +191,7 @@
                                     <div class="post-card-info">
                                         <ul class="list-inline">
                                             <li>
-                                                <a href="author.html">
+                                                <a href="{% url 'BlogApp:author_detail' article.author.id %}">
                                                     {% if article.author.image %}
                                                         <img src="{{ article.author.image.url }}" alt="{{ article.author.full_name }}">
                                                     {% else %}
@@ -200,7 +200,7 @@
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="author.html">{{ article.author.full_name }}</a>
+                                                <a href="{% url 'BlogApp:author_detail' article.author.id %}">{{ article.author.full_name }}</a>
                                             </li>
                                             <li class="dot"></li>
                                             <li>{{ article.created_at|to_jalali:'%Y/%m/%d' }}</li>
