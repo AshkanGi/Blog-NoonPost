@@ -46,6 +46,10 @@
                                     <li>{{ article.view }} بازدید</li>
                                     <li class="dot"></li>
                                     <li>{{ article.comments.count }} دیدگاه</li>
+                                    <li class="dot"></li>
+                                    <li>
+                                      {{ article.like_set.count }}<a href="{% url 'BlogApp:like' article.slug %}" class="fa fa-heart" style="font-size: 10px; margin-right: 5px"></a>
+                                    </li>
                                 </ul>
                             </div>
                         </div>

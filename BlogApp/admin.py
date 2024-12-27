@@ -42,3 +42,9 @@ class CommentAdmin(admin.ModelAdmin):
 class SubscriberAdmin(admin.ModelAdmin):
     list_display = ['email', 'created_at']
     search_fields = ['email']
+
+
+@admin.register(models.Like)
+class LikeAdmin(admin.ModelAdmin):
+    list_display = ['user', 'article', 'created_at']
+    search_fields = ['user', 'article']

@@ -4,7 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>سفارشات</title>
+    <title>پیشخوان</title>
 
     <!-- favicon -->
     <link rel="icon" sizes="16x16" href="{% static 'assets/img/favicon.png' %}">
@@ -20,6 +20,7 @@
     <script defer src="{% static 'assets/scripts/dependencies/swiper.min.js' %}"></script>
     <script defer src="{% static 'assets/scripts/app.js' %}"></script>
     <script defer src="{% static 'assets/scripts/custom.js' %}"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/ckeditor.js"></script>
   </head>
 
   <body>
@@ -945,6 +946,7 @@
       <a href="{% url 'BlogApp:home' %}"><img src="{% static 'assets/img/logo-dark.png' %}" style="width: 300px;height: 100px;" alt="" class="logo-dark"></a>
     </div>
     <div class="flex min-h-screen flex-col" style="margin-top: auto">
+    <!-- Desktop sidebar -->
       <main class="flex-grow bg-background pb-14 pt-36 xs:pt-36">
         <div class="container">
           <div class="grid grid-cols-12 gap-4">
@@ -999,7 +1001,7 @@
                         </a>
                       </li>
                       <li>
-                        <a href="{% url 'ProfileApp:favorite' %}" class="profile-menu profile-menu-active flex items-center justify-between rounded-lg px-2 py-4 xl:px-4">
+                        <a href="{% url 'ProfileApp:favorite' %}" class="profile-menu flex items-center justify-between rounded-lg px-2 py-4 xl:px-4">
                           <div class="flex items-center gap-x-4">
                             <svg class="h-6 w-6">
                               <use xlink:href="#heart" />
@@ -1029,7 +1031,7 @@
                         </a>
                       </li>
                       <li>
-                        <a href="{% url 'ProfileApp:new_article' %}" class="profile-menu flex items-center justify-between rounded-lg px-2 py-4 xl:px-4">
+                        <a href="{% url 'ProfileApp:new_article' %}" class="profile-menu profile-menu-active flex items-center justify-between rounded-lg px-2 py-4 xl:px-4">
                           <div class="flex items-center gap-x-4">
                             <svg style="width: 30px; height: 30px; vertical-align: middle;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                               <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" />
@@ -1056,83 +1058,72 @@
             <!-- content -->
             <div class="col-span-12 lg:col-span-9">
               <div class="rounded-lg bg-muted p-5 shadow-base">
-                <div class="mb-16 flex flex-col items-center justify-between gap-y-8 xs:flex-row">
-                  <!-- Title -->
-                  <h1 class="relative w-fit text-xl font-medium">
-                    علاقه‌مندی های شما
-                    <span class="absolute right-0 top-10 h-[3px] w-full rounded-full bg-primary"></span>
-                  </h1>
-                  <button class="btn-red w-full px-4 py-2 xs:w-fit">
-                    حذف همه
-                  </button>
-                </div>
-                <div class="mb-8 grid grid-cols-2 gap-1 gap-y-2 xs:gap-4 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                  <!-- Product Favorite Card -->
-                  <div class="border-gradient group relative rounded-base border p-px before:absolute before:-inset-px before:h-[calc(100%+2px)] before:w-[calc(100%+2px)] before:rounded-base">
-                    <div class="relative rounded-xl bg-muted p-2 shadow-base md:p-5">
-                      <!-- image -->
-                      <div class="mb-2 md:mb-5" draggable="false">
-                        <a href="./product-detail.html">
-                          <img
-                            alt=""
-                            class="mx-auto w-32 rounded-lg md:w-auto"
-                            src="{% static 'assets/img/62071329.jpg' %}"
-                          />
-                        </a>
+                <h1 class="relative mb-16 w-fit text-xl font-medium">
+                  ثبت مقاله جدید
+                  <span
+                    class="absolute right-0 top-10 h-[3px] w-full rounded-full bg-primary">
+                  </span>
+                </h1>
+                <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="container">
+                  <h1>نوشتن مقاله جدید</h1>
+                  <div style="
+                    max-width: 300px;
+                    margin: 30px ;
+                    background: #fff;
+                    border-radius: 40px;
+                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                    padding:15px;
+                    direction: rtl;">
+                      عنوان:
+                    {{ form.title }}
+                  </div>
+                  <div style="
+                    max-width: 300px;
+                    margin: 30px;
+                    background: #fff;
+                    border-radius: 40px;
+                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                    padding: 50px;
+                    direction: rtl;
+                    display: flex; /* فعال کردن Flexbox */
+                    justify-content: space-between; /* فاصله بین عناصر */
+                    align-items: center; /* تراز کردن عناصر به صورت عمودی */
+                    gap: 50px; /* فاصله بین عناصر */ ">
+                      <div>تگ ها:
+                        {{ form.tags }}
                       </div>
-                      <!-- title -->
-                      <div class="mb-2">
-                        <a
-                          class="line-clamp-2 h-10 text-sm md:h-12 md:text-base"
-                          href="./product-detail.html"
-                        >
-                          ورزش : مسابقات جهانی کشتی
-                        </a>
+                      <div>دسته بندی:
+                        {{ form.category }}
                       </div>
-                      <div class="flex items-center justify-between">
-                        <div>نویسنده : فلان فلانی</div>
+                      <div class="upload-container">
+                       <label for="imageUpload">انتخاب عکس:</label>
+                       <input name="image" type="file" id="image">
+                       <img id="preview" src="#" alt="پیش‌نمایش تصویر" style="display: none;">
                       </div>
+                  </div>
+                    <div class="container">
+                    <textarea name="body" id="editor"></textarea>
                       <br>
-                      <br>
-                      <div class="flex items-center justify-between">
-                          <button type="button" class="flex h-10 w-10 items-center justify-center rounded-full bg-background text-red-500 transition-all duration-200 hover:bg-warning hover:text-gray-100 dark:text-red-400 hover:dark:bg-red-400 hover:dark:text-black">
-                          <svg class="h-6 w-6">
-                            <use xlink:href="#trash" />
-                          </svg>
-                        </button>
-                      </div>
+                    <div class="mb-5">
+                      <button class="btn-primary w-full py-3">ثبت مقاله</button>
                     </div>
                   </div>
                 </div>
-                <!-- Pagination -->
-                <div class="flex items-center justify-center gap-x-4 md:justify-end">
-                  <!-- Previous page-->
-                  <a class="pagination-button flex items-center justify-center" href="#">
-                    <svg class="h-6 w-6">
-                      <use xlink:href="#chevron-right"></use>
-                    </svg>
-                  </a>
-                  <!-- Pages -->
-                  <div class="flex items-center gap-x-2">
-                    <a class="pagination-button pagination-button-active" href="#">
-                      1
-                    </a>
-                    <p class="text-sm text-text/60">...</p>
-                    <a class="pagination-button" href="#"> 3 </a>
-                    <a class="pagination-button" href="#"> 4 </a>
-                    <p class="text-sm text-text/60">...</p>
-                    <a class="pagination-button" href="#"> 10 </a>
-                  </div>
-                  <!-- Next page-->
-                  <a
-                    class="flex h-8 w-8 items-center justify-center rounded-full bg-muted transition-all duration-200 hover:bg-primary hover:text-white hover:dark:bg-emerald-600"
-                    href="#"
-                  >
-                    <svg class="h-6 w-6">
-                      <use xlink:href="#chevron-left"></use>
-                    </svg>
-                  </a>
-                </div>
+                </form>
+              <script>
+                ClassicEditor
+                .create(document.querySelector('#editor'), {
+                language: 'fa', // تنظیم زبان به فارسی
+                })
+               .then(editor => {
+                console.log('Editor was initialized', editor);
+                })
+                .catch(error => {
+                console.error('There was a problem initializing the editor.', error);
+                });
+                </script>
               </div>
             </div>
           </div>
