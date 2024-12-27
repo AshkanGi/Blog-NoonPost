@@ -10,18 +10,22 @@ class UserAdmin(BaseUserAdmin):
     add_form = UserCreationForm
     list_display = ["username", "full_name", "phone", "email", "date_joined", "last_login", "is_admin"]
     readonly_fields = ["date_joined", "last_login"]
-    list_filter = ["is_admin"]
+    list_filter = ["is_admin", "date_joined", "last_login"]
     fieldsets = [
         (None, {"fields": ["username", "password"]}),
         ("Personal info", {"fields": ["full_name", "phone", "email", "bio", "image", "date_joined", "last_login"]}),
         ("Permissions", {"fields": ["is_admin"]}),
     ]
-    add_fieldsets = [(None, {"classes": ["wide"], "fields": ["username", "password1", "password2"]}),]
+    add_fieldsets = [(None, {"classes": ["wide"], "fields": ["username", "full_name", "email", "phone", "password1", "password2"]}),]
     search_fields = ["username", "full_name", "phone", "email"]
     ordering = ["username"]
     filter_horizontal = []
 
 
+@admin.register(OTP)
+class OtpAdmin(admin.ModelAdmin):
+    list_display = ['username', 'code', 'is_expired']
+
+
 admin.site.register(User, UserAdmin)
-admin.site.register(OTP)
 admin.site.unregister(Group)
