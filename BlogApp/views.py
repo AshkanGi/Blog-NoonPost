@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.core.paginator import Paginator
 from .forms import MessageForm, SubscriberForm
 from AccountApp.models import User
-from .models import Article, Category, Tag, Comment, Like
+from .models import Article, Category, Tag, Comment, Like, RecentVisit
 from django.shortcuts import render, get_object_or_404, redirect
 
 
@@ -34,6 +34,7 @@ def home(request):
 def article_detail(request, slug):
     tag = Tag.objects.all()
     article = get_object_or_404(Article, slug=slug)
+    RecentVisit.objects.create(user=request.user, article=article)
     viewed_articles = request.session.get('viewed_articles', [])
     if article.id not in viewed_articles:
         article.view += 1

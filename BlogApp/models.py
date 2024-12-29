@@ -103,7 +103,7 @@ class Subscriber(models.Model):
 
 class Like(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='likes', verbose_name='کاربر')
-    article = models.ForeignKey(Article, on_delete=models.CASCADE, verbose_name='مقاله')
+    article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='likes', verbose_name='مقاله')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='تاریخ ساخت')
 
     def __str__(self):
@@ -113,3 +113,16 @@ class Like(models.Model):
         verbose_name = 'لایک'
         verbose_name_plural = 'لایک ها'
         ordering = ('-created_at',)
+
+
+class RecentVisit(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='views', verbose_name='کاربر')
+    article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='views', verbose_name='مقاله')
+    viewed_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.username} viewed {self.article.title}"
+
+    class Meta:
+        verbose_name = 'بازدید اخیر'
+        verbose_name_plural = 'بازدید های اخیر'

@@ -941,7 +941,7 @@
         </symbol>
       </svg>
     </div>
-    <div style="margin-right: 600px">
+    <div style="margin-right: auto">
       <a href="{% url 'BlogApp:home' %}"><img src="{% static 'assets/img/logo-dark.png' %}" style="width: 300px;height: 100px;" alt="" class="logo-dark"></a>
     </div>
     <div class="flex min-h-screen flex-col" style="margin-top: auto">
@@ -1009,7 +1009,7 @@
                         </a>
                       </li>
                       <li>
-                        <a href="{% url 'ProfileApp:recent' %}" class="profile-menu flex items-center justify-between rounded-lg px-2 py-4 xl:px-4">
+                        <a href="{% url 'ProfileApp:recent'%}" class="profile-menu flex items-center justify-between rounded-lg px-2 py-4 xl:px-4">
                           <div class="flex items-center gap-x-4">
                             <svg class="h-6 w-6">
                               <use xlink:href="#recent" />
@@ -1066,17 +1066,18 @@
                     حذف همه
                   </button>
                 </div>
+                {% for article in liked_articles %}
                 <div class="mb-8 grid grid-cols-2 gap-1 gap-y-2 xs:gap-4 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                   <!-- Product Favorite Card -->
                   <div class="border-gradient group relative rounded-base border p-px before:absolute before:-inset-px before:h-[calc(100%+2px)] before:w-[calc(100%+2px)] before:rounded-base">
                     <div class="relative rounded-xl bg-muted p-2 shadow-base md:p-5">
                       <!-- image -->
                       <div class="mb-2 md:mb-5" draggable="false">
-                        <a href="./product-detail.html">
+                        <a href="{{ article.get_absolute_url }}">
                           <img
                             alt=""
                             class="mx-auto w-32 rounded-lg md:w-auto"
-                            src="{% static 'assets/img/62071329.jpg' %}"
+                            src="{{ article.image.url }}"
                           />
                         </a>
                       </div>
@@ -1084,13 +1085,11 @@
                       <div class="mb-2">
                         <a
                           class="line-clamp-2 h-10 text-sm md:h-12 md:text-base"
-                          href="./product-detail.html"
-                        >
-                          ورزش : مسابقات جهانی کشتی
+                          href=href="{{ article.get_absolute_url }}">{{ article.title }}
                         </a>
                       </div>
                       <div class="flex items-center justify-between">
-                        <div>نویسنده : فلان فلانی</div>
+                        <div> نویسنده : {{ article.author}}</div>
                       </div>
                       <br>
                       <br>
@@ -1104,6 +1103,7 @@
                     </div>
                   </div>
                 </div>
+                {% endfor %}
                 <!-- Pagination -->
                 <div class="flex items-center justify-center gap-x-4 md:justify-end">
                   <!-- Previous page-->

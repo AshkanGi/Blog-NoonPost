@@ -941,7 +941,7 @@
         </symbol>
       </svg>
     </div>
-    <div style="margin-right: 600px">
+    <div style="margin-right: auto">
       <a href="{% url 'BlogApp:home' %}"><img src="{% static 'assets/img/logo-dark.png' %}" style="width: 300px;height: 100px;" alt="" class="logo-dark"></a>
     </div>
     <div class="flex min-h-screen flex-col" style="margin-top: auto">
@@ -1161,6 +1161,61 @@
                       </div>
                     </button>
                   </div>
+                  <!-- image   -->
+                  <div class="col-span-2 sm:col-span-1">
+                    <form method="post" action="{% url 'ProfileApp:update_image' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <button
+                      class="w-full"
+                      type="button">
+                      <div class="relative rounded-lg border p-4 hover:border-border/50">
+                        <div class="flex justify-between">
+                          <div class="flex flex-col items-start gap-y-2">
+                            <div class="text-text/90">عکس پروفایل</div>
+                              <div class="upload-container">
+                               <label for="imageUpload">انتخاب عکس:</label>
+                               <input name="image" type="file" id="image">
+                               <img id="preview" src="#" alt="پیش‌نمایش تصویر" style="display: none;">
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+                    </button>
+                    <div class="flex items-center justify-end gap-x-4">
+                      <button class="btn-primary w-full py-3">
+                        ثبت
+                      </button>
+                    </div>
+                    </form>
+                  </div>
+                  <!-- bio   -->
+                  <div class="col-span-2 sm:col-span-1">
+                    <button
+                      class="w-full"
+                      type="button"
+                      data-modal-target="bio-modal"
+                      data-modal-toggle="bio-modal">
+                      <div class="relative rounded-lg border p-4 hover:border-border/50">
+                        <div class="flex justify-between">
+                          <div class="flex flex-col items-start gap-y-2">
+                            <div class="text-text/90">راجب من</div>
+                            {% if user.is_authenticated %}
+                              <div class="mr-2 text-text/60">{{ user.bio }}</div>
+                            {% endif %}
+                          </div>
+                          <svg class="h-6 w-6 text-primary">
+                            <use xlink:href="#edit" />
+                          </svg>
+                        </div>
+                      </div>
+                    </button>
+                  </div>
+                  <!-- message  -->
+                  {% if messages %}
+                    {% for message in messages %}
+                      <p style="color: red">{{ message }}</p>
+                    {% endfor %}
+                  {% endif %}
                 </div>
               </div>
             </div>
@@ -1181,7 +1236,7 @@
                 <h3 class="md:text-lg">تغییر شماره موبایل</h3>
                 <button
                   class=" "
-                  data-modal-hide="phoneNumber-modal"
+                  data-modal-hide="fullname-modal"
                   type="button">
                   <svg class="h-5 w-5">
                     <use xlink:href="#close"></use>
@@ -1216,11 +1271,6 @@
                 </button>
               </div>
               <br>
-              {% if messages %}
-                  {% for message in messages %}
-                    <p style="color: #e5e7eb">{{ message }}</p>
-                  {% endfor %}
-              {% endif %}
             </form>
             </div>
           </div>
@@ -1274,11 +1324,6 @@
                 </button>
               </div>
               <br>
-              {% if messages %}
-                {% for message in messages %}
-                  <p style="color: #e5e7eb">{{ message }}</p>
-                {% endfor %}
-              {% endif %}
             </form>
             </div>
           </div>
@@ -1330,11 +1375,6 @@
                 </button>
               </div>
               <br>
-              {% if messages %}
-                {% for message in messages %}
-                  <p style="color: #e5e7eb">{{ message }}</p>
-                {% endfor %}
-              {% endif %}
             </form>
             </div>
           </div>
@@ -1374,7 +1414,7 @@
                         <input
                           type="password"
                           id="currentPassword"
-                          name="password"
+                          name="current_password"
                           class="peer w-full rounded-lg border-none bg-transparent px-4 py-3 placeholder-transparent focus:outline-none focus:ring-0"
                           placeholder="کلمه عبور فعلی"
                         />
@@ -1426,11 +1466,57 @@
                 </button>
               </div>
                 <br>
-              {% if messages %}
-                {% for message in messages %}
-                  <p style="color: #e5e7eb">{{ message }}</p>
-                {% endfor %}
-              {% endif %}
+            </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- bio modal -->
+      <div
+        id="bio-modal"
+        tabindex="-1"
+        aria-hidden="true"
+        class="main-scroll fixed left-0 right-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-full w-full overflow-y-auto overflow-x-hidden p-4 md:inset-0"
+      >
+        <div class="relative max-h-full w-full max-w-md">
+          <div
+            class="divide-y overflow-hidden rounded-lg bg-muted shadow ring-1 ring-gray-100 dark:ring-white/5">
+            <div class="px-4 py-5 sm:px-6">
+              <div class="flex items-center justify-between">
+                <h3 class="md:text-lg">راجب من</h3>
+                <button class=" " data-modal-hide="bio-modal" type="button">
+                  <svg class="h-5 w-5">
+                    <use xlink:href="#close"></use>
+                  </svg>
+                  <span class="sr-only">Close Modal</span>
+                </button>
+              </div>
+            </div>
+            <div class="space-y-6 px-4 py-5 sm:p-6">
+            <form method="post" action="{% url 'ProfileApp:update_bio' %}">
+            {% csrf_token %}
+              <div>
+                <label for="phoneNumber" class="relative block rounded-lg border shadow-base">
+                  <input
+                    type="text"
+                    id="phoneNumber"
+                    dir="auto"
+                    name="bio"
+                    class="peer w-full rounded-lg border-none bg-transparent px-4 py-3 text-left placeholder-transparent focus:outline-none focus:ring-0"
+                    placeholder="توضیحات"
+                  />
+                  <span class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-muted px-2 py-0.5 text-sm text-text/60 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-focus:top-0 peer-focus:text-sm">
+                    توضیحات
+                  </span>
+                </label>
+                <div class="my-2 h-6 text-red-500 dark:text-red-400"></div>
+              </div>
+              <div class="flex items-center justify-end gap-x-4">
+                <button class="btn-primary w-full py-3">
+                  ثبت
+                </button>
+              </div>
+              <br>
             </form>
             </div>
           </div>
