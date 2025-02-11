@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% block title %}{{ category.title }}{% endblock %}
+{% load jalali_tags %}
+{% load static %}
+
+{% block content %}
+
+    <!--Categorie-->
+    <section class="categorie-section">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="categorie-title">
+                        <small>
+                            <a href="{% url 'BlogApp:home' %}">صفحه نخست</a>
+                            <span class="arrow_carrot-left"></span> {{ category.title }}
+                        </small>
+                        <h3>دسته بندی : <span>{{ category.title }}</span> </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section><!--/-->
+
+    <!--mansory-layout-->
+    <section class="masonry-layout col2-layout mt-30">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-8 mt--10 ">
+                    <!--cards-->
+                    <div class="card-columns">
+                        <!--Post-5-->
+                        {% for article in articles %}
+                            <div class="card">
+                            <div class="post-card">
+                            <div class="post-card-image">
+                                {% if article.image %}
+                                    <a href="{{ article.get_absolute_url }}"><img src="{{ article.image.url }}" alt="{{ article.title|truncatewords:'6' }}"></a>
+                                {% else %}
+                                    <a href="{{ article.get_absolute_url }}"><img src="{% static 'assets/img/image_not_available.jpg' %}" alt="{{ article.title|truncatewords:'6' }}"></a>
+                                {% endif %}
+                            </div>
+                            <div class="post-card-content">
+                                {% for category in article.category.all %}
+                                    <a href="{% url 'BlogApp:category_article' category.slug %}" class="categorie">{{ category.title }}</a>
+                                {% endfor %}
+                                <h5><a href="{{ article.get_absolute_url }}">{{ article.title|truncatewords:'6' }}</a> </h5>
+                                <p>{{ article.body|safe|truncatewords:'7' }}</p>
+                                <div class="post-card-info">
+                                    <ul class="list-inline">
+                                        <li>
+                                            <a href="{% url 'BlogApp:author_detail' article.author.id %}">
+                                                {% if article.author.image %}
+                                                    <img src="{{ article.author.image.url }}" alt="{{ article.author.full_name }}">
+                                                {% else %}
+                                                    <img src="{% static 'assets/img/default_profile_image.png' %}" alt="{{ article.author.full_name }}">
+                                                {% endif %}
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{% url 'BlogApp:author_detail' article.author.id %}">{{ article.author.full_name }}</a>
+                                        </li>
+                                        <li class="dot"></li>
+                                        <li>{{ article.created_at|to_jalali:'%Y/%m/%d' }}</li>
+                                        <li class="dot"></li>
+                                        {% if article.view > 0 %}
+                                            <li>{{ article.view }} بازدید</li>
+                                        {% else %}
+                                            <li>صفر بازدید</li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        <!--/-->
+                    </div>
+
+                    <!--pagination-->
+                    <div class="pagination mt-30">
+                        {% if articles.has_other_pages %}
+                            <ul class="list-inline">
+                                {% if articles.has_previous %}
+                                    <li><a href="?page={{ articles.previous_page_number }}"><i class="arrow_carrot-2right"></i></a>
+                                {% endif %}
+                                {% for page in pages_to_show %}
+                                    {% if page == '...' %}
+                                       <i>...</i>
+                                    {% elif articles.number == page %}
+                                        <li class="active"><a href="?page={{ page }}">{{ page }}</a></li>
+                                    {% else %}
+                                        <li><a href="?page={{ page }}">{{ page }}</a></li>
+                                    {% endif %}
+                                {% endfor %}
+                                {% if articles.has_next %}
+                                    <li><a href="?page={{ articles.next_page_number }}"><i class="arrow_carrot-2left"></i></a></li>
+                                {% endif %}
+                            </ul>
+                        {% endif %}
+                    </div><!--/-->
+                </div>
+                <!-- sidebar -->
+                {% include 'includes/sidebar.html' %}
+            </div>
+        </div>
+    </section><!--/-->
+{% endblock %}

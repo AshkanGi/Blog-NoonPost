@@ -1,4 +1,4 @@
-from BlogApp.models import Article, Category
+from blog.models import Article, Category
 
 
 def articles_categories(request):

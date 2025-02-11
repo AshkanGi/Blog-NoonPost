@@ -18,9 +18,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     #My_App
-    "AccountApp.apps.AccountappConfig",
-    "BlogApp.apps.BlogappConfig",
-    "ProfileApp.apps.ProfileappConfig",
+    "account.apps.AccountappConfig",
+    "blog.apps.BlogappConfig",
+    "profile.apps.ProfileappConfig",
     #Installed App
     'django_cleanup',
     'ckeditor',
@@ -36,7 +36,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'AccountApp.middleware.RedirectAuthenticatedUserMiddleware',
+    'account.middleware.RedirectAuthenticatedUserMiddleware',
 ]
 
 ROOT_URLCONF = 'NoonPost.urls'
@@ -97,7 +97,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-AUTH_USER_MODEL = "AccountApp.User"
+AUTH_USER_MODEL = "account.User"
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
