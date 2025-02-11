@@ -5,10 +5,10 @@ from . import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('user/', include('AccountApp.urls')),
-    path('', include('BlogApp.urls')),
+    path('user/', include('account.urls')),
+    path('', include('blog.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
-    path('profile/', include('ProfileApp.urls')),
+    path('profile/', include('profile.urls')),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
