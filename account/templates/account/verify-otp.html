@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title> ورود / ثبت نام </title>
+    <title>Register / ثبت نام</title>
 
     <link href="{% static 'assets/css/fonts.css' %}" rel="stylesheet" />
     <link href="{% static 'assets/css/app.css' %}" rel="stylesheet" />
@@ -932,36 +932,106 @@
         </symbol>
     </svg>
 </div>
-<!-- Logo -->
 <div style=" margin-left: 100px">
-  <a href="{% url 'BlogApp:home' %}"><img src="{% static 'assets/img/logo-dark.png' %}" alt="" class="logo-dark"></a>
+  <a href="{% url 'blog:home' %}"><img src="{% static 'assets/img/logo-dark.png' %}" alt="" class="logo-dark"></a>
 </div>
 <div class="flex min-h-screen items-center justify-center bg-background" style="margin-top: -100px">
     <div class="container">
         <div class="mx-auto max-w-[450px] rounded-xl bg-muted p-5 shadow-base md:p-10">
-            <h1 style="font-size: x-large" class="mb-10 text-center text-lg"> ورود | ثبت نام</h1>
-            <p class="text-body-2 text-neutral-700 mb-4 text-right w-full">سلام!</p>
-            <p class="text-body-2 text-neutral-700 mb-4 text-right w-full">لطفا شماره موبایل یا ایمیل خود را وارد کنید</p>
+            <h1 style="font-size: x-large" class="mb-10 text-center text-lg"> کد تایید را وارد کنید </h1>
             <form method="post">
                 {% csrf_token %}
                 <div class="mb-4 space-y-4">
-                    <label  for="username" class="relative block rounded-lg border shadow-base">
-                        {{ form.username }}
+                    <label for="username" class="relative block rounded-lg border shadow-base">
+                        {{ form.code }}
                     </label>
-                    <p class="h-5 text-sm text-red-500 dark:text-red-400">{{ form.username.errors }}</p>
+                    <p class="h-5 text-sm text-red-500 dark:text-red-400">
+                        {{ form.code.errors }}
+                    </p>
                     {% if messages %}
                       {% for message in messages %}
                         <p style="color: red">{{ message }}</p>
                       {% endfor %}
                     {% endif %}
                 </div>
+                <ul class="mb-8 space-y-4">
+                    <li>
+                        <p class="text-primary text-sm" id="countdownSection">
+                            زمان باقی‌مانده تا ارسال مجدد
+                            <span id="countdown" class="font-bold">2:0</span>
+                        </p>
+                        <button
+                          id="resendButton"
+                          onclick="resendOTP()"
+                          class="hidden">
+                          <span> ارسال مجدد </span>
+                        </button>
+                    </li>
+                </ul>
                 <div class="mb-5">
-                    <button class="btn-primary w-full py-3">ورود</button>
+                    <button class="btn-primary w-full py-3">تایید</button>
                 </div>
-                <p class="text-center text-sm text-text/90">با ورود به فروشگاه,<a href="" class="text-primary"> کلیه قوانین</a> را می‌پذیرم </p>
             </form>
         </div>
     </div>
 </div>
+<script>
+let countdownMinutes = 2;
+let countdownSeconds = 0;
+let countdownInterval;
+function updateCountdown() {
+    const countdownElement = document.getElementById("countdown");
+    countdownElement.textContent = `${countdownMinutes.toString().padStart(0, "5")}:${countdownSeconds
+        .toString()
+        .padStart(2, "5")}`;
+}
+function startCountdown() {
+    countdownInterval = setInterval(function () {
+        if (countdownMinutes === 0 && countdownSeconds === 0) {
+            clearInterval(countdownInterval);
+            document.getElementById("resendButton").classList.remove("hidden");
+            document.getElementById("resendButton").disabled = false;
+            document.getElementById("countdownSection").classList.add("hidden");
+        } else {
+            if (countdownSeconds === 0) {
+                countdownMinutes--;
+                countdownSeconds = 59;
+            } else {
+                countdownSeconds--;
+            }
+            updateCountdown();
+        }
+    }, 1000);
+}
+function resendOTP() {
+    if (countdownMinutes !== 0 || countdownSeconds !== 0) return;
+    fetch("{% url 'account:resend_otp' %}", {
+        method: "POST",
+        headers: {
+            "X-CSRFToken": "{{ csrf_token }}",
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username: "{{ user.username }}" }), // ارسال نام کاربری یا اطلاعات مورد نیاز
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            if (data.success) {
+                countdownMinutes = 2;
+                countdownSeconds = 0;
+                updateCountdown();
+                document.getElementById("resendButton").classList.add("hidden");
+                document.getElementById("resendButton").disabled = true;
+                document.getElementById("countdownSection").classList.remove("hidden");
+                startCountdown();
+            } else {
+                alert("خطا در ارسال مجدد کد.");
+            }
+        })
+        .catch((error) => {
+            console.error("Error:", error);
+        });
+}
+startCountdown();
+    </script>
 </body>
 </html>

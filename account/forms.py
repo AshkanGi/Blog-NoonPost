@@ -4,6 +4,10 @@ from account.models import User
 from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
+attrs = {
+    'class': 'peer w-full rounded-lg border-none bg-transparent p-4 text-left placeholder-transparent focus:outline-none focus:ring-0'
+}
+
 
 class UserCreationForm(forms.ModelForm):
     password1 = forms.CharField(label="Password", widget=forms.PasswordInput)
@@ -34,11 +38,6 @@ class UserChangeForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ["username", "password", "is_active", "is_admin"]
-
-
-attrs = {
-    'class': 'peer w-full rounded-lg border-none bg-transparent p-4 text-left placeholder-transparent focus:outline-none focus:ring-0'
-}
 
 
 class RegisterForm(forms.Form):

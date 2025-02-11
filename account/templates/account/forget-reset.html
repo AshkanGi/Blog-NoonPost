@@ -9,7 +9,6 @@
     <link href="{% static 'assets/css/fonts.css' %}" rel="stylesheet" />
     <link href="{% static 'assets/css/app.css' %}" rel="stylesheet" />
     <link href="{% static 'assets/css/theme.css' %}" rel="stylesheet" />
-
     <script src="{% static 'assets/scripts/mount.js' %}"></script>
   </head>
 
@@ -933,32 +932,33 @@
       </svg>
     </div>
     <div style=" margin-left: 100px">
-      <a href="{% url 'BlogApp:home' %}"><img src="{% static 'assets/img/logo-dark.png' %}" alt="" class="logo-dark"></a>
+      <a href="{% url 'blog:home' %}"><img src="{% static 'assets/img/logo-dark.png' %}" alt="" class="logo-dark"></a>
     </div>
     <div class="flex min-h-screen items-center justify-center bg-background" style="margin-top: -100px">
       <div class="container">
         <div class="mx-auto max-w-[450px] rounded-xl bg-muted p-5 shadow-base md:p-10">
-          <h1 class="mb-10 text-center text-lg">فراموشی کلمه عبور</h1>
+          <!-- Logo -->
+          <h1 class="mb-10 text-lg">* تغییر کلمه عبور *</h1>
           <form method="post">
           {% csrf_token %}
           <div class="mb-4 space-y-4">
-              <p>شماره موبایل یا ایمیل خود را وارد کنید</p>
-            <label for="username" class="relative block rounded-lg border shadow-base">
-               {{ form.username }}
+              <p>کلمه عبور جدید</p>
+            <label for="password" class="relative block rounded-lg border shadow-base">
+              {{ form.password }}
             </label>
-            <p class="h-5 text-sm text-red-500 dark:text-red-400">
-              {{ form.username.errors }}
-            </p>
-            {% if messages %}
-              {% for message in messages %}
-                <p style="color: red">{{ message }}</p>
-              {% endfor %}
-            {% endif %}
+            <p class="h-5 text-sm text-red-500 dark:text-red-400"></p>
+          </div>
+          <div class="mb-4 space-y-4">
+              <p>تکرار کلمه عبور جدید</p>
+            <label for="confirm_password" class="relative block rounded-lg border shadow-base">
+              {{ form.confirm_password }}
+            </label>
+            <p class="h-5 text-sm text-red-500 dark:text-red-400">{{ form.non_field_errors }}</p>
           </div>
           <div>
-            <button class="btn-primary w-full py-3">بازیابی کلمه عبور</button>
+            <button class="btn-primary w-full py-3">تایید</button>
           </div>
-          </form>
+        </form>
         </div>
       </div>
     </div>
